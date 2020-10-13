@@ -201,10 +201,10 @@ void loop() {
 
   if (button.shortPress || demoDelay.secondsDelay(switchStates)) {                         // || (or) case here uses a delay to cycle states instead of just waiting for a button press. Remove from || to change to button only
 
-    if (currentState == 0) {
-      currentState = 1;
+    if (currentState == HEADLIGHT_ON) {
+      currentState = TURN_SIGNAL_ON;
     } else {
-      currentState = 0;
+      currentState = HEADLIGHT_ON;
     }
     button.buttonReset();     // .buttonReset method resets longPress & shortPress variables once action has been taken
   }
@@ -216,13 +216,14 @@ void loop() {
   if (currentState != lastState) {     // If the current State is different from the previous State
     solidColour(blackout);                 // If state has changed set all LEDs black (helps smooth transitions between states)
     
-    if (currentState == 0) {           // and that state is 0, then change all the LEDS to white. This only needs to happen when the state changes
+    if (currentState == HEADLIGHT_ON) {           // and that state is 0, then change all the LEDS to white. This only needs to happen when the state changes
       solidColour(offWhite);
+        adv = 0;
     }
     lastState = currentState;      // Save the current state into the lastState for comparason in the next loop
   }
 
-  if (currentState == 1) {               //if we are in "turn Signal Mode" this is a dynamic effect, and so needs to be run in every loop to work.
+  if (currentState == TURN_SIGNAL_ON) {               //if we are in "turn Signal Mode" this is a dynamic effect, and so needs to be run in every loop to work.
     turnSignal(yellowOrange);
   }
 
